@@ -86,7 +86,7 @@ func recentContributions(count int) []Contribution {
 	// fmt.Printf("Finding recent contributions...\n")
 
 	var contributions []Contribution
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"username": githubv4.String(username),
 	}
 	err := gitHubClient.Query(context.Background(), &recentContributionsQuery, variables)
@@ -126,7 +126,7 @@ func recentPullRequests(count int) []PullRequest {
 	// fmt.Printf("Finding recently created pullRequests...\n")
 
 	var pullRequests []PullRequest
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"username": githubv4.String(username),
 		"count":    githubv4.Int(count + 1), // +1 in case we encounter the meta-repo itself
 	}
@@ -158,7 +158,7 @@ func recentRepos(count int) []Repo {
 	// fmt.Printf("Finding recently created repos...\n")
 
 	var repos []Repo
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"username": githubv4.String(username),
 		"count":    githubv4.Int(count + 1), // +1 in case we encounter the meta-repo itself
 		"isFork":   githubv4.Boolean(false),
@@ -188,7 +188,7 @@ func recentForks(count int) []Repo {
 	// fmt.Printf("Finding recently created repos...\n")
 
 	var repos []Repo
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"username": githubv4.String(username),
 		"count":    githubv4.Int(count + 1), // +1 in case we encounter the meta-repo itself
 		"isFork":   githubv4.Boolean(true),
@@ -221,7 +221,7 @@ func recentReleases(count int) []Repo {
 	var repos []Repo
 
 	for {
-		variables := map[string]interface{}{
+		variables := map[string]any{
 			"username": githubv4.String(username),
 			"after":    after,
 		}
@@ -254,7 +254,7 @@ func recentReleases(count int) []Repo {
 				repos = append(repos, r)
 			}
 
-			after = githubv4.NewString(v.Cursor)
+			after = new(v.Cursor)
 		}
 	}
 
@@ -273,7 +273,7 @@ func recentReleases(count int) []Repo {
 }
 
 func repo(owner, name string) Repo {
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"owner": githubv4.String(owner),
 		"name":  githubv4.String(name),
 	}

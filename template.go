@@ -8,7 +8,7 @@ import (
 	"github.com/dustin/go-humanize"
 )
 
-func humanized(t interface{}) string {
+func humanized(t any) string {
 	switch v := t.(type) {
 	case time.Time:
 		// flatten time to prevent updating README too often:
@@ -24,7 +24,7 @@ func humanized(t interface{}) string {
 	}
 }
 
-func reverse(s interface{}) interface{} {
+func reverse(s any) any {
 	n := reflect.ValueOf(s).Len()
 	swap := reflect.Swapper(s)
 	for i, j := 0, n-1; i < j; i, j = i+1, j-1 {

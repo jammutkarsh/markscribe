@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/caarlos0/env/v6"
+	"github.com/caarlos0/env/v11"
 	"github.com/shurcooL/graphql"
 	"golang.org/x/oauth2"
 )
@@ -25,7 +25,7 @@ func login() (*graphql.Client, error) {
 
 	client := graphql.NewClient(literalURL, http.DefaultClient)
 	m := loginM{}
-	if err := client.Mutate(context.Background(), &m, map[string]interface{}{
+	if err := client.Mutate(context.Background(), &m, map[string]any{
 		"email":    graphql.String(auth.Email),
 		"password": graphql.String(auth.Password),
 	}); err != nil {

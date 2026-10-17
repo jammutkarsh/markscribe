@@ -26,7 +26,7 @@ func recentStars(count int) []Star {
 
 outer:
 	for {
-		variables := map[string]interface{}{
+		variables := map[string]any{
 			"username": githubv4.String(username),
 			"count":    githubv4.Int(count),
 			"after":    after,
@@ -47,7 +47,7 @@ outer:
 			if len(starredRepos) >= count {
 				break outer
 			}
-			after = githubv4.NewString(v.Cursor)
+			after = new(v.Cursor)
 		}
 	}
 

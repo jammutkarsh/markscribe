@@ -23,7 +23,7 @@ func gists(count int) []Gist {
 	// fmt.Printf("Finding gists...\n")
 
 	var gists []Gist
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"username": githubv4.String(username),
 		"count":    githubv4.Int(count),
 	}

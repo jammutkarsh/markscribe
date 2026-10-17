@@ -30,7 +30,7 @@ func sponsors(count int) []Sponsor {
 	// fmt.Printf("Finding sponsors...\n")
 
 	var sponsors []Sponsor
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"username": githubv4.String(username),
 		"count":    githubv4.Int(count),
 	}

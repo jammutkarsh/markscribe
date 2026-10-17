@@ -38,7 +38,7 @@ func recentFollowers(count int) []User {
 	// fmt.Printf("Finding recent followers...\n")
 
 	var users []User
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"username": githubv4.String(username),
 		"count":    githubv4.Int(count),
 	}

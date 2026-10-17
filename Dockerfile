@@ -1,4 +1,4 @@
-FROM golang:alpine as builder
+FROM golang:alpine AS builder
 
 LABEL authors="Christian Muehlhaeuser: muesli@gmail.com"
 
