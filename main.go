@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"flag"
 	"fmt"
@@ -90,20 +91,19 @@ func main() {
 		}
 	}
 
-	w := os.Stdout
-	if len(*write) > 0 {
-		f, err := os.Create(*write)
-		if err != nil {
-			fmt.Println("Can't create:", err)
-			os.Exit(1)
-		}
-		defer f.Close() //nolint: errcheck
-		w = f
+	// render fully first, so a failing template never truncates the output file
+	var buf bytes.Buffer
+	if err := tpl.Execute(&buf, nil); err != nil {
+		fmt.Println("Can't render template:", err)
+		os.Exit(1)
 	}
 
-	err = tpl.Execute(w, nil)
-	if err != nil {
-		fmt.Println("Can't render template:", err)
+	if len(*write) == 0 {
+		_, _ = buf.WriteTo(os.Stdout)
+		return
+	}
+	if err := os.WriteFile(*write, buf.Bytes(), 0o644); err != nil {
+		fmt.Println("Can't write:", err)
 		os.Exit(1)
 	}
 }

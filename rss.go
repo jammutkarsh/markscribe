@@ -14,13 +14,13 @@ type RSSEntry struct {
 	PublishedAt time.Time
 }
 
-func rssFeed(url string, count int) []RSSEntry {
+func rssFeed(url string, count int) ([]RSSEntry, error) {
 	var r []RSSEntry
 
 	fp := gofeed.NewParser()
 	feed, err := fp.ParseURL(url)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	for _, v := range feed.Items {
@@ -42,5 +42,5 @@ func rssFeed(url string, count int) []RSSEntry {
 		}
 	}
 
-	return r
+	return r, nil
 }
